@@ -9,6 +9,9 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Pages } from './collections/Pages'
+import { Services } from './collections/Services'
+import { Header } from './collections/Header'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -20,7 +23,10 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [Pages, Users, Media, Services, Header],
+  cors: ['http://localhost:3000'], // Allow frontend domain (adjust as needed)
+  csrf: ['http://localhost:3000', 'http://localhost:3001'], // Adjust for frontend URL
+
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
