@@ -6,16 +6,16 @@ export const Pages: CollectionConfig = {
     useAsTitle: 'title',
   },
   access: {
-    read: () => true, // ✅ Allow public read access
-    update: ({ req }) => true, // ✅ Only admins can update
-    create: ({ req }) => true, // ✅ Only admins can create
-    delete: ({ req }) => true, // ✅ Only admins can delete
+    read: () => true,
+    update: () => true,
+    create: () => true,
+    delete: () => true,
   },
   fields: [
     {
       name: 'title',
       type: 'text',
-      required: true,
+      label: 'Title',
     },
     {
       name: 'slug',
@@ -30,17 +30,26 @@ export const Pages: CollectionConfig = {
       fields: [
         {
           name: 'heroText',
-          type: 'text',
-          required: true,
+          type: 'group',
+          label: 'Hero Text',
+          fields: [
+            { name: 'en', type: 'text', label: 'English', required: true },
+            { name: 'ar', type: 'text', label: 'Arabic', required: true },
+          ],
         },
         {
           name: 'subText',
-          type: 'textarea',
+          type: 'group',
+          label: 'Sub Text',
+          fields: [
+            { name: 'en', type: 'textarea', label: 'English' },
+            { name: 'ar', type: 'textarea', label: 'Arabic' },
+          ],
         },
         {
           name: 'heroImage',
           type: 'upload',
-          relationTo: 'media', // Make sure "media" collection exists
+          relationTo: 'media',
           required: true,
         },
       ],
@@ -48,32 +57,50 @@ export const Pages: CollectionConfig = {
     {
       name: 'services',
       type: 'group',
+      label: 'Services Section',
       fields: [
         {
           name: 'title',
-          type: 'text',
-          required: true,
+          type: 'group',
+          label: 'Title',
+          fields: [
+            { name: 'en', type: 'text', label: 'English', required: true },
+            { name: 'ar', type: 'text', label: 'Arabic', required: true },
+          ],
         },
         {
           name: 'description',
-          type: 'text',
+          type: 'group',
+          label: 'Description',
+          fields: [
+            { name: 'en', type: 'textarea', label: 'English' },
+            { name: 'ar', type: 'textarea', label: 'Arabic' },
+          ],
         },
       ],
     },
     {
       name: 'partners',
       type: 'group',
-      label: 'Partners',
+      label: 'Partners Section',
       fields: [
         {
           name: 'title',
-          type: 'text',
-          required: true,
+          type: 'group',
+          label: 'Title',
+          fields: [
+            { name: 'en', type: 'text', label: 'English', required: true },
+            { name: 'ar', type: 'text', label: 'Arabic', required: true },
+          ],
         },
         {
           name: 'description',
-          type: 'textarea',
-          required: true,
+          type: 'group',
+          label: 'Description',
+          fields: [
+            { name: 'en', type: 'textarea', label: 'English', required: true },
+            { name: 'ar', type: 'textarea', label: 'Arabic', required: true },
+          ],
         },
         {
           name: 'images',
@@ -84,7 +111,7 @@ export const Pages: CollectionConfig = {
             {
               name: 'image',
               type: 'upload',
-              relationTo: 'media', // Ensure "media" collection exists
+              relationTo: 'media',
               required: true,
             },
           ],
@@ -98,8 +125,12 @@ export const Pages: CollectionConfig = {
       fields: [
         {
           name: 'title',
-          type: 'text',
-          required: true,
+          type: 'group',
+          label: 'Title',
+          fields: [
+            { name: 'en', type: 'text', label: 'English', required: true },
+            { name: 'ar', type: 'text', label: 'Arabic', required: true },
+          ],
         },
         {
           name: 'statistics',
@@ -114,8 +145,244 @@ export const Pages: CollectionConfig = {
             },
             {
               name: 'description',
-              type: 'text',
+              type: 'group',
+              label: 'Description',
+              fields: [
+                { name: 'en', type: 'text', label: 'English', required: true },
+                { name: 'ar', type: 'text', label: 'Arabic', required: true },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'about',
+      type: 'group',
+      label: 'About Section',
+      fields: [
+        {
+          name: 'title',
+          type: 'group',
+          label: 'Title',
+          fields: [
+            { name: 'en', type: 'text', label: 'English', required: true },
+            { name: 'ar', type: 'text', label: 'Arabic', required: true },
+          ],
+        },
+        {
+          name: 'subtitle',
+          type: 'group',
+          label: 'Subtitle',
+          fields: [
+            { name: 'en', type: 'text', label: 'English', required: true },
+            { name: 'ar', type: 'text', label: 'Arabic', required: true },
+          ],
+        },
+        {
+          name: 'mission',
+          type: 'group',
+          label: 'Mission Section',
+          fields: [
+            {
+              name: 'title',
+              type: 'group',
+              label: 'Title',
+              fields: [
+                { name: 'en', type: 'text', label: 'English', required: true },
+                { name: 'ar', type: 'text', label: 'Arabic', required: true },
+              ],
+            },
+            {
+              name: 'subtitle',
+              type: 'group',
+              label: 'Subtitle',
+              fields: [
+                { name: 'en', type: 'text', label: 'English', required: true },
+                { name: 'ar', type: 'text', label: 'Arabic', required: true },
+              ],
+            },
+            {
+              name: 'description',
+              type: 'group',
+              label: 'Description',
+              fields: [
+                { name: 'en', type: 'textarea', label: 'English', required: true },
+                { name: 'ar', type: 'textarea', label: 'Arabic', required: true },
+              ],
+            },
+            {
+              name: 'image',
+              type: 'upload',
+              relationTo: 'media',
               required: true,
+            },
+          ],
+        },
+        {
+          name: 'journey',
+          type: 'group',
+          label: 'Journey Section',
+          fields: [
+            {
+              name: 'title',
+              type: 'group',
+              label: 'Title',
+              fields: [
+                { name: 'en', type: 'text', label: 'English', required: true },
+                { name: 'ar', type: 'text', label: 'Arabic', required: true },
+              ],
+            },
+            {
+              name: 'subtitle',
+              type: 'group',
+              label: 'Subtitle',
+              fields: [
+                { name: 'en', type: 'text', label: 'English', required: true },
+                { name: 'ar', type: 'text', label: 'Arabic', required: true },
+              ],
+            },
+            {
+              name: 'steps',
+              type: 'array',
+              label: 'Steps',
+              fields: [
+                {
+                  name: 'title',
+                  type: 'group',
+                  label: 'Title',
+                  fields: [
+                    { name: 'en', type: 'text', label: 'English', required: true },
+                    { name: 'ar', type: 'text', label: 'Arabic', required: true },
+                  ],
+                },
+                {
+                  name: 'content',
+                  type: 'group',
+                  label: 'Content (HTML)',
+                  fields: [
+                    { name: 'en', type: 'textarea', label: 'English', required: true },
+                    { name: 'ar', type: 'textarea', label: 'Arabic', required: true },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'contact',
+      type: 'group',
+      label: 'Contact Section',
+      fields: [
+        {
+          name: 'title',
+          type: 'group',
+          label: 'Title',
+          fields: [
+            { name: 'en', type: 'text', label: 'English', required: true },
+            { name: 'ar', type: 'text', label: 'Arabic', required: true },
+          ],
+        },
+        {
+          name: 'subtitle',
+          type: 'group',
+          label: 'Subtitle',
+          fields: [
+            { name: 'en', type: 'text', label: 'English', required: true },
+            { name: 'ar', type: 'text', label: 'Arabic', required: true },
+          ],
+        },
+        {
+          name: 'sections',
+          type: 'array',
+          label: 'Sections',
+          fields: [
+            {
+              name: 'title',
+              type: 'group',
+              label: 'Title',
+              fields: [
+                { name: 'en', type: 'text', label: 'English', required: true },
+                { name: 'ar', type: 'text', label: 'Arabic', required: true },
+              ],
+            },
+            {
+              name: 'subtitle',
+              type: 'group',
+              label: 'Subtitle',
+              fields: [
+                { name: 'en', type: 'text', label: 'English', required: true },
+                { name: 'ar', type: 'text', label: 'Arabic', required: true },
+              ],
+            },
+            {
+              name: 'description',
+              type: 'group',
+              label: 'Description',
+              fields: [
+                { name: 'en', type: 'textarea', label: 'English', required: true },
+                { name: 'ar', type: 'textarea', label: 'Arabic', required: true },
+              ],
+            },
+            {
+              name: 'mode',
+              type: 'select',
+              label: 'Mode',
+              options: [
+                { label: 'White', value: 'white' },
+                { label: 'Dark', value: 'dark' },
+              ],
+            },
+            {
+              name: 'image',
+              type: 'upload',
+              relationTo: 'media',
+              required: true,
+            },
+          ],
+        },
+        {
+          name: 'jobs',
+          type: 'array',
+          label: 'Jobs',
+          fields: [
+            {
+              name: 'title',
+              type: 'group',
+              label: 'Title',
+              fields: [
+                { name: 'en', type: 'text', label: 'English', required: true },
+                { name: 'ar', type: 'text', label: 'Arabic', required: true },
+              ],
+            },
+            {
+              name: 'location',
+              type: 'group',
+              label: 'Location',
+              fields: [
+                { name: 'en', type: 'text', label: 'English', required: true },
+                { name: 'ar', type: 'text', label: 'Arabic', required: true },
+              ],
+            },
+            {
+              name: 'offerings',
+              type: 'group',
+              label: 'Offerings',
+              fields: [
+                { name: 'en', type: 'textarea', label: 'English', required: true },
+                { name: 'ar', type: 'textarea', label: 'Arabic', required: true },
+              ],
+            },
+            {
+              name: 'description',
+              type: 'group',
+              label: 'Description',
+              fields: [
+                { name: 'en', type: 'textarea', label: 'English', required: true },
+                { name: 'ar', type: 'textarea', label: 'Arabic', required: true },
+              ],
             },
           ],
         },

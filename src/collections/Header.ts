@@ -7,9 +7,9 @@ export const Header: CollectionConfig = {
   },
   access: {
     read: () => true, // ✅ Public read access
-    update: ({ req }) => true, // ✅ Everyone can update
-    create: ({ req }) => true, // ✅ Everyone can create
-    delete: ({ req }) => true, // ✅ Everyone can delete
+    update: () => true, // ✅ Everyone can update
+    create: () => true, // ✅ Everyone can create
+    delete: () => true, // ✅ Everyone can delete
   },
   fields: [
     {
@@ -24,22 +24,42 @@ export const Header: CollectionConfig = {
       fields: [
         {
           name: 'name',
-          type: 'text',
-          required: true,
+          type: 'group',
+          label: 'Product Name', // ✅ Group label for clarity
+          fields: [
+            { name: 'en', type: 'text', label: 'English', required: true },
+            { name: 'ar', type: 'text', label: 'Arabic', required: true },
+          ],
         },
         {
           name: 'description',
-          type: 'textarea',
-          required: true,
+          type: 'group',
+          label: 'Product Description',
+          fields: [
+            {
+              name: 'en',
+              type: 'textarea',
+              label: 'English',
+              required: true,
+            },
+            {
+              name: 'ar',
+              type: 'textarea',
+              label: 'Arabic',
+              required: true,
+            },
+          ],
         },
         {
           name: 'href',
           type: 'text',
+          label: 'Product Link',
           required: true,
         },
         {
           name: 'image',
           type: 'upload',
+          label: 'Product Image',
           relationTo: 'media',
           required: true,
         },

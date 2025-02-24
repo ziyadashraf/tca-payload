@@ -12,6 +12,7 @@ import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Services } from './collections/Services'
 import { Header } from './collections/Header'
+import { News } from './collections/News'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -23,7 +24,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Pages, Users, Media, Services, Header],
+  collections: [Pages, Users, Media, Services, Header, News],
   cors: ['http://localhost:3000'], // Allow frontend domain (adjust as needed)
   csrf: ['http://localhost:3000', 'http://localhost:3001'], // Adjust for frontend URL
 

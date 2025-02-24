@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     services: Service;
     header: Header;
+    news: News;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -82,6 +83,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
+    news: NewsSelect<false> | NewsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -124,20 +126,38 @@ export interface UserAuthOperations {
  */
 export interface Page {
   id: string;
-  title: string;
+  title?: string | null;
   slug: string;
   landing: {
-    heroText: string;
-    subText?: string | null;
+    heroText: {
+      en: string;
+      ar: string;
+    };
+    subText?: {
+      en?: string | null;
+      ar?: string | null;
+    };
     heroImage: string | Media;
   };
   services: {
-    title: string;
-    description?: string | null;
+    title: {
+      en: string;
+      ar: string;
+    };
+    description?: {
+      en?: string | null;
+      ar?: string | null;
+    };
   };
   partners: {
-    title: string;
-    description: string;
+    title: {
+      en: string;
+      ar: string;
+    };
+    description: {
+      en: string;
+      ar: string;
+    };
     images?:
       | {
           image: string | Media;
@@ -146,11 +166,115 @@ export interface Page {
       | null;
   };
   stats: {
-    title: string;
+    title: {
+      en: string;
+      ar: string;
+    };
     statistics?:
       | {
           number: number;
-          description: string;
+          description: {
+            en: string;
+            ar: string;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  about: {
+    title: {
+      en: string;
+      ar: string;
+    };
+    subtitle: {
+      en: string;
+      ar: string;
+    };
+    mission: {
+      title: {
+        en: string;
+        ar: string;
+      };
+      subtitle: {
+        en: string;
+        ar: string;
+      };
+      description: {
+        en: string;
+        ar: string;
+      };
+      image: string | Media;
+    };
+    journey: {
+      title: {
+        en: string;
+        ar: string;
+      };
+      subtitle: {
+        en: string;
+        ar: string;
+      };
+      steps?:
+        | {
+            title: {
+              en: string;
+              ar: string;
+            };
+            content: {
+              en: string;
+              ar: string;
+            };
+            id?: string | null;
+          }[]
+        | null;
+    };
+  };
+  contact: {
+    title: {
+      en: string;
+      ar: string;
+    };
+    subtitle: {
+      en: string;
+      ar: string;
+    };
+    sections?:
+      | {
+          title: {
+            en: string;
+            ar: string;
+          };
+          subtitle: {
+            en: string;
+            ar: string;
+          };
+          description: {
+            en: string;
+            ar: string;
+          };
+          mode?: ('white' | 'dark') | null;
+          image: string | Media;
+          id?: string | null;
+        }[]
+      | null;
+    jobs?:
+      | {
+          title: {
+            en: string;
+            ar: string;
+          };
+          location: {
+            en: string;
+            ar: string;
+          };
+          offerings: {
+            en: string;
+            ar: string;
+          };
+          description: {
+            en: string;
+            ar: string;
+          };
           id?: string | null;
         }[]
       | null;
@@ -201,8 +325,15 @@ export interface User {
  */
 export interface Service {
   id: string;
-  service: string;
-  description: string;
+  service: {
+    en: string;
+    ar: string;
+  };
+  serviceTitle?: string | null;
+  description: {
+    en: string;
+    ar: string;
+  };
   image: string | Media;
   link: string;
   type: 'white' | 'gray';
@@ -218,13 +349,49 @@ export interface Header {
   logo: string | Media;
   products?:
     | {
-        name: string;
-        description: string;
+        name: {
+          en: string;
+          ar: string;
+        };
+        description: {
+          en: string;
+          ar: string;
+        };
         href: string;
         image: string | Media;
         id?: string | null;
       }[]
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news".
+ */
+export interface News {
+  id: string;
+  date: string;
+  type: {
+    en: string;
+    ar: string;
+  };
+  title: {
+    en: string;
+    ar: string;
+  };
+  content: {
+    en: string;
+    ar: string;
+  };
+  author: {
+    profileImage: string | Media;
+    name: string;
+    jobTitle: {
+      en: string;
+      ar: string;
+    };
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -254,6 +421,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'header';
         value: string | Header;
+      } | null)
+    | ({
+        relationTo: 'news';
+        value: string | News;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -307,21 +478,51 @@ export interface PagesSelect<T extends boolean = true> {
   landing?:
     | T
     | {
-        heroText?: T;
-        subText?: T;
+        heroText?:
+          | T
+          | {
+              en?: T;
+              ar?: T;
+            };
+        subText?:
+          | T
+          | {
+              en?: T;
+              ar?: T;
+            };
         heroImage?: T;
       };
   services?:
     | T
     | {
-        title?: T;
-        description?: T;
+        title?:
+          | T
+          | {
+              en?: T;
+              ar?: T;
+            };
+        description?:
+          | T
+          | {
+              en?: T;
+              ar?: T;
+            };
       };
   partners?:
     | T
     | {
-        title?: T;
-        description?: T;
+        title?:
+          | T
+          | {
+              en?: T;
+              ar?: T;
+            };
+        description?:
+          | T
+          | {
+              en?: T;
+              ar?: T;
+            };
         images?:
           | T
           | {
@@ -332,12 +533,164 @@ export interface PagesSelect<T extends boolean = true> {
   stats?:
     | T
     | {
-        title?: T;
+        title?:
+          | T
+          | {
+              en?: T;
+              ar?: T;
+            };
         statistics?:
           | T
           | {
               number?: T;
-              description?: T;
+              description?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              id?: T;
+            };
+      };
+  about?:
+    | T
+    | {
+        title?:
+          | T
+          | {
+              en?: T;
+              ar?: T;
+            };
+        subtitle?:
+          | T
+          | {
+              en?: T;
+              ar?: T;
+            };
+        mission?:
+          | T
+          | {
+              title?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              subtitle?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              description?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              image?: T;
+            };
+        journey?:
+          | T
+          | {
+              title?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              subtitle?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              steps?:
+                | T
+                | {
+                    title?:
+                      | T
+                      | {
+                          en?: T;
+                          ar?: T;
+                        };
+                    content?:
+                      | T
+                      | {
+                          en?: T;
+                          ar?: T;
+                        };
+                    id?: T;
+                  };
+            };
+      };
+  contact?:
+    | T
+    | {
+        title?:
+          | T
+          | {
+              en?: T;
+              ar?: T;
+            };
+        subtitle?:
+          | T
+          | {
+              en?: T;
+              ar?: T;
+            };
+        sections?:
+          | T
+          | {
+              title?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              subtitle?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              description?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              mode?: T;
+              image?: T;
+              id?: T;
+            };
+        jobs?:
+          | T
+          | {
+              title?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              location?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              offerings?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              description?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
               id?: T;
             };
       };
@@ -383,8 +736,19 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "services_select".
  */
 export interface ServicesSelect<T extends boolean = true> {
-  service?: T;
-  description?: T;
+  service?:
+    | T
+    | {
+        en?: T;
+        ar?: T;
+      };
+  serviceTitle?: T;
+  description?:
+    | T
+    | {
+        en?: T;
+        ar?: T;
+      };
   image?: T;
   link?: T;
   type?: T;
@@ -400,11 +764,60 @@ export interface HeaderSelect<T extends boolean = true> {
   products?:
     | T
     | {
-        name?: T;
-        description?: T;
+        name?:
+          | T
+          | {
+              en?: T;
+              ar?: T;
+            };
+        description?:
+          | T
+          | {
+              en?: T;
+              ar?: T;
+            };
         href?: T;
         image?: T;
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news_select".
+ */
+export interface NewsSelect<T extends boolean = true> {
+  date?: T;
+  type?:
+    | T
+    | {
+        en?: T;
+        ar?: T;
+      };
+  title?:
+    | T
+    | {
+        en?: T;
+        ar?: T;
+      };
+  content?:
+    | T
+    | {
+        en?: T;
+        ar?: T;
+      };
+  author?:
+    | T
+    | {
+        profileImage?: T;
+        name?: T;
+        jobTitle?:
+          | T
+          | {
+              en?: T;
+              ar?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
