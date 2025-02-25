@@ -72,6 +72,7 @@ export interface Config {
     services: Service;
     header: Header;
     news: News;
+    projects: Project;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -84,6 +85,7 @@ export interface Config {
     services: ServicesSelect<false> | ServicesSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     news: NewsSelect<false> | NewsSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -397,6 +399,27 @@ export interface News {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: string;
+  service: string;
+  name: string;
+  description: {
+    en: string;
+    ar: string;
+  };
+  images?:
+    | {
+        image: string | Media;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -425,6 +448,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'news';
         value: string | News;
+      } | null)
+    | ({
+        relationTo: 'projects';
+        value: string | Project;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -818,6 +845,28 @@ export interface NewsSelect<T extends boolean = true> {
               en?: T;
               ar?: T;
             };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects_select".
+ */
+export interface ProjectsSelect<T extends boolean = true> {
+  service?: T;
+  name?: T;
+  description?:
+    | T
+    | {
+        en?: T;
+        ar?: T;
+      };
+  images?:
+    | T
+    | {
+        image?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;

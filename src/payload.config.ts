@@ -13,6 +13,7 @@ import { Pages } from './collections/Pages'
 import { Services } from './collections/Services'
 import { Header } from './collections/Header'
 import { News } from './collections/News'
+import { Projects } from './collections/Projects'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -24,10 +25,12 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Pages, Users, Media, Services, Header, News],
-  cors: ['http://localhost:3000'], // Allow frontend domain (adjust as needed)
-  csrf: ['http://localhost:3000', 'http://localhost:3001'], // Adjust for frontend URL
-
+  collections: [Pages, Users, Media, Services, Header, News, Projects],
+  cors: {
+    origins: ['http://localhost:3000'], // Change to your frontend URL
+  }, // Allow frontend domain (adjust as needed)
+  csrf: ['http://localhost:3000'], // Adjust for frontend URL
+  serverURL: 'http://localhost:3001',
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
