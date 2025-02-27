@@ -28,10 +28,10 @@ export default buildConfig({
   },
   collections: [Pages, Users, Media, Services, Header, News, Projects],
   cors: {
-    origins: ['http://localhost:3000', "https://tca-kappa.vercel.app"], // Change to your frontend URL
+    origins: ['http://localhost:3000'], // Change to your frontend URL
   }, // Allow frontend domain (adjust as needed)
-  csrf: ['http://localhost:3000', "https://tca-kappa.vercel.app/"], // Adjust for frontend URL
-  serverURL: 'https://tca-payload.vercel.app',
+  csrf: ['http://localhost:3000'], // Adjust for frontend URL
+  serverURL: 'http://localhost:3001',
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -46,32 +46,15 @@ export default buildConfig({
   plugins: [
     s3Storage({
       collections: {
-        media: {
-          acl: 'public-read',
-          adminThumbnail: ({ doc }: { doc: { url?: string } }) => doc?.url || '',
-          imageSizes: [
-            {
-              name: 'thumbnail',
-              width: 400,
-              height: 300,
-              position: 'centre',
-            },
-            {
-              name: 'card',
-              width: 768,
-              height: 1024,
-              position: 'centre',
-            },
-          ],
-        },
+        media: true,
       },
       bucket: 'tca-payload',
       config: {
         credentials: {
-          accessKeyId: process.env.AWS_ACCESS_KEY,
-          secretAccessKey: process.env.AWS_SECRET,
+          accessKeyId: process.env.AWS_ACCESS_KEY || '',
+          secretAccessKey: process.env.AWS_SECRET || '',
         },
-        region: process.env.AWS_REGION,
+        region: process.env.AWS_REGION || '',
       },
     }),
   ],
