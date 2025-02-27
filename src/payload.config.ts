@@ -28,10 +28,10 @@ export default buildConfig({
   },
   collections: [Pages, Users, Media, Services, Header, News, Projects],
   cors: {
-    origins: ['http://localhost:3000'], // Change to your frontend URL
+    origins: ['http://localhost:3000', 'https://tca-kappa.vercel.app'], // Change to your frontend URL
   }, // Allow frontend domain (adjust as needed)
-  csrf: ['http://localhost:3000'], // Adjust for frontend URL
-  serverURL: 'http://localhost:3001',
+  csrf: ['http://localhost:3000', 'https://tca-kappa.vercel.app'], // Adjust for frontend URL
+  serverURL: 'https://tca-payload.vercel.app',
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
