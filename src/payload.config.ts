@@ -6,6 +6,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import { s3Storage } from '@payloadcms/storage-s3'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -27,9 +28,9 @@ export default buildConfig({
   },
   collections: [Pages, Users, Media, Services, Header, News, Projects],
   cors: {
-    origins: ['https://tca-kappa.vercel.app'], // Change to your frontend URL
+    origins: ['http://localhost:3000', 'https://tca-kappa.vercel.app'], // Change to your frontend URL
   }, // Allow frontend domain (adjust as needed)
-  csrf: ['https://tca-kappa.vercel.app'], // Adjust for frontend URL
+  csrf: ['http://localhost:3000', 'https://tca-kappa.vercel.app'], // Adjust for frontend URL
   serverURL: 'https://tca-payload.vercel.app',
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
@@ -43,7 +44,18 @@ export default buildConfig({
   // database-adapter-config-end
   sharp,
   plugins: [
-    payloadCloudPlugin(),
-    // storage-adapter-placeholder
+    s3Storage({
+      collections: {
+        media: true,
+      },
+      bucket: 'tca-payload',
+      config: {
+        credentials: {
+          accessKeyId: process.env.AWS_ACCESS_KEY || '',
+          secretAccessKey: process.env.AWS_SECRET || '',
+        },
+        region: process.env.AWS_REGION || '',
+      },
+    }),
   ],
 })
