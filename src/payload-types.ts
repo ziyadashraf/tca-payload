@@ -67,12 +67,11 @@ export interface Config {
   blocks: {};
   collections: {
     pages: Page;
-    users: User;
-    media: Media;
     services: Service;
-    header: Header;
-    news: News;
     projects: Project;
+    news: News;
+    media: Media;
+    users: User;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -80,12 +79,11 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
-    users: UsersSelect<false> | UsersSelect<true>;
-    media: MediaSelect<false> | MediaSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
-    header: HeaderSelect<false> | HeaderSelect<true>;
-    news: NewsSelect<false> | NewsSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    news: NewsSelect<false> | NewsSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -128,76 +126,67 @@ export interface UserAuthOperations {
  */
 export interface Page {
   id: string;
-  title?: string | null;
+  title: string;
+  template: 'home' | 'about' | 'contact';
   slug: string;
-  landing: {
-    heroText: {
-      en: string;
-      ar: string;
+  homeFields?: {
+    hero: {
+      heroText: {
+        en: string;
+        ar: string;
+      };
+      subText?: {
+        en?: string | null;
+        ar?: string | null;
+      };
+      heroImage: string | Media;
     };
-    subText?: {
-      en?: string | null;
-      ar?: string | null;
+    stats: {
+      title: {
+        en: string;
+        ar: string;
+      };
+      statistics?:
+        | {
+            number: number;
+            description: {
+              en: string;
+              ar: string;
+            };
+            id?: string | null;
+          }[]
+        | null;
     };
-    heroImage: string | Media;
+    partners: {
+      title: {
+        en: string;
+        ar: string;
+      };
+      description: {
+        en: string;
+        ar: string;
+      };
+      images?:
+        | {
+            image: string | Media;
+            id?: string | null;
+          }[]
+        | null;
+    };
   };
-  services: {
-    title: {
-      en: string;
-      ar: string;
-    };
-    description?: {
-      en?: string | null;
-      ar?: string | null;
-    };
-  };
-  partners: {
-    title: {
-      en: string;
-      ar: string;
-    };
-    description: {
-      en: string;
-      ar: string;
-    };
-    images?:
-      | {
-          image: string | Media;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  stats: {
-    title: {
-      en: string;
-      ar: string;
-    };
-    statistics?:
-      | {
-          number: number;
-          description: {
-            en: string;
-            ar: string;
-          };
-          id?: string | null;
-        }[]
-      | null;
-  };
-  about: {
-    title: {
-      en: string;
-      ar: string;
-    };
-    subtitle: {
-      en: string;
-      ar: string;
-    };
-    mission: {
+  aboutFields?: {
+    welcomeSection: {
       title: {
         en: string;
         ar: string;
       };
       subtitle: {
+        en: string;
+        ar: string;
+      };
+    };
+    mission: {
+      title: {
         en: string;
         ar: string;
       };
@@ -207,79 +196,26 @@ export interface Page {
       };
       image: string | Media;
     };
-    journey: {
+  };
+  contactFields?: {
+    welcomeSection: {
       title: {
         en: string;
         ar: string;
       };
-      subtitle: {
+      description: {
         en: string;
         ar: string;
       };
-      steps?:
-        | {
-            title: {
-              en: string;
-              ar: string;
-            };
-            content: {
-              en: string;
-              ar: string;
-            };
-            id?: string | null;
-          }[]
-        | null;
     };
-  };
-  contact: {
-    title: {
-      en: string;
-      ar: string;
+    contactInfo: {
+      email: string;
+      phone: string;
+      address: {
+        en: string;
+        ar: string;
+      };
     };
-    subtitle: {
-      en: string;
-      ar: string;
-    };
-    sections?:
-      | {
-          title: {
-            en: string;
-            ar: string;
-          };
-          subtitle: {
-            en: string;
-            ar: string;
-          };
-          description: {
-            en: string;
-            ar: string;
-          };
-          mode?: ('white' | 'dark') | null;
-          image: string | Media;
-          id?: string | null;
-        }[]
-      | null;
-    jobs?:
-      | {
-          title: {
-            en: string;
-            ar: string;
-          };
-          location: {
-            en: string;
-            ar: string;
-          };
-          offerings: {
-            en: string;
-            ar: string;
-          };
-          description: {
-            en: string;
-            ar: string;
-          };
-          id?: string | null;
-        }[]
-      | null;
   };
   updatedAt: string;
   createdAt: string;
@@ -305,61 +241,41 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-  id: string;
-  role: 'admin' | 'editor' | 'user';
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  password?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "services".
  */
 export interface Service {
   id: string;
-  service: {
+  serviceTitle?: string | null;
+  name: {
     en: string;
     ar: string;
   };
-  serviceTitle?: string | null;
-  description: {
+  shortDescription: {
+    en: string;
+    ar: string;
+  };
+  longDescription: {
     en: string;
     ar: string;
   };
   image: string | Media;
-  link: string;
-  type: 'white' | 'gray';
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "header".
+ * via the `definition` "projects".
  */
-export interface Header {
+export interface Project {
   id: string;
-  logo: string | Media;
-  products?:
+  service: string;
+  name: string;
+  description: {
+    en: string;
+    ar: string;
+  };
+  images?:
     | {
-        name: {
-          en: string;
-          ar: string;
-        };
-        description: {
-          en: string;
-          ar: string;
-        };
-        href: string;
         image: string | Media;
         id?: string | null;
       }[]
@@ -399,24 +315,21 @@ export interface News {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "projects".
+ * via the `definition` "users".
  */
-export interface Project {
+export interface User {
   id: string;
-  service: string;
-  name: string;
-  description: {
-    en: string;
-    ar: string;
-  };
-  images?:
-    | {
-        image: string | Media;
-        id?: string | null;
-      }[]
-    | null;
+  role: 'admin' | 'editor' | 'user';
   updatedAt: string;
   createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -430,28 +343,24 @@ export interface PayloadLockedDocument {
         value: string | Page;
       } | null)
     | ({
-        relationTo: 'users';
-        value: string | User;
-      } | null)
-    | ({
-        relationTo: 'media';
-        value: string | Media;
-      } | null)
-    | ({
         relationTo: 'services';
         value: string | Service;
       } | null)
     | ({
-        relationTo: 'header';
-        value: string | Header;
+        relationTo: 'projects';
+        value: string | Project;
       } | null)
     | ({
         relationTo: 'news';
         value: string | News;
       } | null)
     | ({
-        relationTo: 'projects';
-        value: string | Project;
+        relationTo: 'media';
+        value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: string | User;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -501,98 +410,91 @@ export interface PayloadMigration {
  */
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
+  template?: T;
   slug?: T;
-  landing?:
+  homeFields?:
     | T
     | {
-        heroText?:
+        hero?:
           | T
           | {
-              en?: T;
-              ar?: T;
+              heroText?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              subText?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              heroImage?: T;
             };
-        subText?:
+        stats?:
           | T
           | {
-              en?: T;
-              ar?: T;
+              title?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              statistics?:
+                | T
+                | {
+                    number?: T;
+                    description?:
+                      | T
+                      | {
+                          en?: T;
+                          ar?: T;
+                        };
+                    id?: T;
+                  };
             };
-        heroImage?: T;
-      };
-  services?:
-    | T
-    | {
-        title?:
+        partners?:
           | T
           | {
-              en?: T;
-              ar?: T;
-            };
-        description?:
-          | T
-          | {
-              en?: T;
-              ar?: T;
-            };
-      };
-  partners?:
-    | T
-    | {
-        title?:
-          | T
-          | {
-              en?: T;
-              ar?: T;
-            };
-        description?:
-          | T
-          | {
-              en?: T;
-              ar?: T;
-            };
-        images?:
-          | T
-          | {
-              image?: T;
-              id?: T;
-            };
-      };
-  stats?:
-    | T
-    | {
-        title?:
-          | T
-          | {
-              en?: T;
-              ar?: T;
-            };
-        statistics?:
-          | T
-          | {
-              number?: T;
+              title?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
               description?:
                 | T
                 | {
                     en?: T;
                     ar?: T;
                   };
-              id?: T;
+              images?:
+                | T
+                | {
+                    image?: T;
+                    id?: T;
+                  };
             };
       };
-  about?:
+  aboutFields?:
     | T
     | {
-        title?:
+        welcomeSection?:
           | T
           | {
-              en?: T;
-              ar?: T;
-            };
-        subtitle?:
-          | T
-          | {
-              en?: T;
-              ar?: T;
+              title?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              subtitle?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
             };
         mission?:
           | T
@@ -603,12 +505,6 @@ export interface PagesSelect<T extends boolean = true> {
                     en?: T;
                     ar?: T;
                   };
-              subtitle?:
-                | T
-                | {
-                    en?: T;
-                    ar?: T;
-                  };
               description?:
                 | T
                 | {
@@ -617,65 +513,14 @@ export interface PagesSelect<T extends boolean = true> {
                   };
               image?: T;
             };
-        journey?:
-          | T
-          | {
-              title?:
-                | T
-                | {
-                    en?: T;
-                    ar?: T;
-                  };
-              subtitle?:
-                | T
-                | {
-                    en?: T;
-                    ar?: T;
-                  };
-              steps?:
-                | T
-                | {
-                    title?:
-                      | T
-                      | {
-                          en?: T;
-                          ar?: T;
-                        };
-                    content?:
-                      | T
-                      | {
-                          en?: T;
-                          ar?: T;
-                        };
-                    id?: T;
-                  };
-            };
       };
-  contact?:
+  contactFields?:
     | T
     | {
-        title?:
-          | T
-          | {
-              en?: T;
-              ar?: T;
-            };
-        subtitle?:
-          | T
-          | {
-              en?: T;
-              ar?: T;
-            };
-        sections?:
+        welcomeSection?:
           | T
           | {
               title?:
-                | T
-                | {
-                    en?: T;
-                    ar?: T;
-                  };
-              subtitle?:
                 | T
                 | {
                     en?: T;
@@ -687,123 +532,67 @@ export interface PagesSelect<T extends boolean = true> {
                     en?: T;
                     ar?: T;
                   };
-              mode?: T;
-              image?: T;
-              id?: T;
             };
-        jobs?:
+        contactInfo?:
           | T
           | {
-              title?:
+              email?: T;
+              phone?: T;
+              address?:
                 | T
                 | {
                     en?: T;
                     ar?: T;
                   };
-              location?:
-                | T
-                | {
-                    en?: T;
-                    ar?: T;
-                  };
-              offerings?:
-                | T
-                | {
-                    en?: T;
-                    ar?: T;
-                  };
-              description?:
-                | T
-                | {
-                    en?: T;
-                    ar?: T;
-                  };
-              id?: T;
             };
       };
   updatedAt?: T;
   createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
- */
-export interface UsersSelect<T extends boolean = true> {
-  role?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media_select".
- */
-export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "services_select".
  */
 export interface ServicesSelect<T extends boolean = true> {
-  service?:
+  serviceTitle?: T;
+  name?:
     | T
     | {
         en?: T;
         ar?: T;
       };
-  serviceTitle?: T;
-  description?:
+  shortDescription?:
+    | T
+    | {
+        en?: T;
+        ar?: T;
+      };
+  longDescription?:
     | T
     | {
         en?: T;
         ar?: T;
       };
   image?: T;
-  link?: T;
-  type?: T;
   updatedAt?: T;
   createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "header_select".
+ * via the `definition` "projects_select".
  */
-export interface HeaderSelect<T extends boolean = true> {
-  logo?: T;
-  products?:
+export interface ProjectsSelect<T extends boolean = true> {
+  service?: T;
+  name?: T;
+  description?:
     | T
     | {
-        name?:
-          | T
-          | {
-              en?: T;
-              ar?: T;
-            };
-        description?:
-          | T
-          | {
-              en?: T;
-              ar?: T;
-            };
-        href?: T;
+        en?: T;
+        ar?: T;
+      };
+  images?:
+    | T
+    | {
         image?: T;
         id?: T;
       };
@@ -851,25 +640,37 @@ export interface NewsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "projects_select".
+ * via the `definition` "media_select".
  */
-export interface ProjectsSelect<T extends boolean = true> {
-  service?: T;
-  name?: T;
-  description?:
-    | T
-    | {
-        en?: T;
-        ar?: T;
-      };
-  images?:
-    | T
-    | {
-        image?: T;
-        id?: T;
-      };
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
   updatedAt?: T;
   createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users_select".
+ */
+export interface UsersSelect<T extends boolean = true> {
+  role?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

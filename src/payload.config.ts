@@ -1,19 +1,19 @@
 // storage-adapter-import-placeholder
+import path from 'path'
+import sharp from 'sharp'
+
 import { mongooseAdapter } from '@payloadcms/db-mongodb' // database-adapter-import
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
-import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
-import { Services } from './collections/Services'
-import { Header } from './collections/Header'
 import { News } from './collections/News'
 import { Projects } from './collections/Projects'
+import { Services } from './collections/Services'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -25,7 +25,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Pages, Users, Media, Services, Header, News, Projects],
+  collections: [Pages, Services, Projects, News, Media, Users],
   cors: {
     origins: ['http://localhost:3000'], // Change to your frontend URL
   }, // Allow frontend domain (adjust as needed)

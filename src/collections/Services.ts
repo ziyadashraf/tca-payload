@@ -1,9 +1,10 @@
-import { CollectionConfig } from 'payload'
+import type { CollectionConfig } from 'payload'
 
 export const Services: CollectionConfig = {
   slug: 'services',
   admin: {
-    useAsTitle: 'serviceTitle', // ✅ Flat string field (not an object)
+    useAsTitle: 'serviceTitle',
+    defaultColumns: ['serviceTitle'],
   },
   access: {
     read: () => true,
@@ -13,7 +14,14 @@ export const Services: CollectionConfig = {
   },
   fields: [
     {
-      name: 'service',
+      name: 'serviceTitle',
+      type: 'text',
+      admin: {
+        hidden: true,
+      },
+    },
+    {
+      name: 'name',
       type: 'group',
       label: 'Service Name',
       fields: [
@@ -32,14 +40,28 @@ export const Services: CollectionConfig = {
       ],
     },
     {
-      name: 'serviceTitle', // ✅ New flat field
-      type: 'text',
-      hidden: true, // Hide from UI (used internally)
+      name: 'shortDescription',
+      type: 'group',
+      label: 'Short Description',
+      fields: [
+        {
+          name: 'en',
+          type: 'textarea',
+          label: 'English',
+          required: true,
+        },
+        {
+          name: 'ar',
+          type: 'textarea',
+          label: 'Arabic',
+          required: true,
+        },
+      ],
     },
     {
-      name: 'description',
+      name: 'longDescription',
       type: 'group',
-      label: 'Description',
+      label: 'Long Description',
       fields: [
         {
           name: 'en',
@@ -58,31 +80,16 @@ export const Services: CollectionConfig = {
     {
       name: 'image',
       type: 'upload',
+      label: 'Service Image',
       relationTo: 'media',
-      required: true,
-    },
-    {
-      name: 'link',
-      type: 'text',
-      label: 'Link',
-      required: true,
-    },
-    {
-      name: 'type',
-      type: 'select',
-      label: 'Type',
-      options: [
-        { label: 'White', value: 'white' },
-        { label: 'Gray', value: 'gray' },
-      ],
       required: true,
     },
   ],
   hooks: {
     beforeChange: [
       ({ data }) => {
-        if (data?.service?.en) {
-          data.serviceTitle = data.service.en // ✅ Store English title separately
+        if (data?.name?.en) {
+          data.serviceTitle = data.name.en
         }
         return data
       },
