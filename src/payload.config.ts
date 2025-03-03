@@ -31,7 +31,7 @@ export default buildConfig({
     origins: [
       // 'http://localhost:3000',
       'http://localhost:3000', 'https://tca.com.sa',
-    ], // Change to your frontend URL
+    ,'https://www.tca.com.sa'], // Change to your frontend URL
   }, // Allow frontend domain (adjust as needed)
   csrf: [
     // 'http://localhost:3000',
