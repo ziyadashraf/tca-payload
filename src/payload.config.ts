@@ -51,7 +51,7 @@ export default buildConfig({
       bucket: 'tca-payload',
       config: {
         credentials: {
-          accessKeyId: process.env.AWS_ACCESS_KEY || '',
+          accessKeyId: process.env.AWS_ACCESS_KEY || 'AKIAVRUVSCKBEJFYJWGC',
           secretAccessKey: process.env.AWS_SECRET || '',
         },
         region: process.env.AWS_REGION || '',
