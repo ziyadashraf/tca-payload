@@ -39,6 +39,10 @@ export default buildConfig({
   ], // Adjust for frontend URL
   // serverURL: 'http://localhost:3001',
   serverURL: 'https://admin.tca.com.sa',
+    origins: ['http://localhost:3000', 'https://tca-kappa.vercel.app', 'https://www.tca.com.sa'], // Change to your frontend URL
+  }, // Allow frontend domain (adjust as needed)
+  csrf: ['http://localhost:3000', 'https://tca-kappa.vercel.app'], // Adjust for frontend URL
+  serverURL: 'https://tca-payload.vercel.app,',
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
