@@ -28,15 +28,9 @@ export default buildConfig({
   },
   collections: [Pages, Services, Projects, News, Media, Users],
   cors: {
-    origins: [
-      // 'http://localhost:3000', 'https://tca-kappa.vercel.app', 'https://www.tca.com.sa',
-      'https://tca.com.sa',
-    ], // Change to your frontend URL
+    origins: ['https://www.tca.com.sa'], // Change to your frontend URL
   }, // Allow frontend domain (adjust as needed)
-  csrf: [
-    // 'http://localhost:3000',
-    'https://tca.com.sa',
-  ], // Adjust for frontend URL
+  csrf: ['https://www.tca.com.sa'], // Adjust for frontend URL
   // serverURL: 'http://localhost:3001',
   serverURL: 'https://admin.tca.com.sa',
   editor: lexicalEditor(),
