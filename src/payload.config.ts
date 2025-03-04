@@ -7,6 +7,7 @@ import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
+import { s3Storage } from '@payloadcms/storage-s3'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -28,7 +29,7 @@ export default buildConfig({
   collections: [Pages, Services, Projects, News, Media, Users],
   cors: {
     origins: [
-      // 'http://localhost:3000',
+      // 'http://localhost:3000', 'https://tca-kappa.vercel.app', 'https://www.tca.com.sa',
       'https://tca.com.sa',
     ], // Change to your frontend URL
   }, // Allow frontend domain (adjust as needed)
@@ -50,7 +51,18 @@ export default buildConfig({
   // database-adapter-config-end
   sharp,
   plugins: [
-    payloadCloudPlugin(),
-    // storage-adapter-placeholder
+    s3Storage({
+      collections: {
+        media: true,
+      },
+      bucket: 'tca-payload',
+      config: {
+        credentials: {
+          accessKeyId: process.env.AWS_ACCESS_KEY || 'AKIAVRUVSCKBEJFYJWGC',
+          secretAccessKey: process.env.AWS_SECRET || '',
+        },
+        region: process.env.AWS_REGION || '',
+      },
+    }),
   ],
 })
