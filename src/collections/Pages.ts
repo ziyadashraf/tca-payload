@@ -97,7 +97,7 @@ export const Pages: CollectionConfig = {
               fields: [
                 {
                   name: 'number',
-                  type: 'number',
+                  type: 'text',
                   label: 'Number',
                   required: true,
                 },
@@ -141,8 +141,6 @@ export const Pages: CollectionConfig = {
               name: 'images',
               type: 'array',
               label: 'Partner Logos',
-              minRows: 4,
-              maxRows: 4,
               fields: [
                 {
                   name: 'image',
@@ -206,6 +204,15 @@ export const Pages: CollectionConfig = {
               ],
             },
             {
+              name: 'subtitle',
+              type: 'group',
+              label: 'Mission Subtitle',
+              fields: [
+                { name: 'en', type: 'text', label: 'English', required: true },
+                { name: 'ar', type: 'text', label: 'Arabic', required: true },
+              ],
+            },
+            {
               name: 'description',
               type: 'group',
               label: 'Mission Description',
@@ -220,6 +227,57 @@ export const Pages: CollectionConfig = {
               label: 'Mission Image',
               relationTo: 'media',
               required: true,
+            },
+          ],
+        },
+        // add a section called journey, which is a group of 2 fieldsm a title and content, both are text and have both en and ar, the main journey has a title and subtitle
+        {
+          name: 'journey',
+          type: 'group',
+          label: 'Journey Section',
+          fields: [
+            {
+              name: 'title',
+              type: 'group',
+              label: 'Journey Title',
+              fields: [
+                { name: 'en', type: 'text', label: 'English', required: true },
+                { name: 'ar', type: 'text', label: 'Arabic', required: true },
+              ],
+            },
+            {
+              name: 'subtitle',
+              type: 'group',
+              label: 'Journey Subtitle',
+              fields: [
+                { name: 'en', type: 'text', label: 'English', required: true },
+                { name: 'ar', type: 'text', label: 'Arabic', required: true },
+              ],
+            },
+            {
+              name: 'items',
+              type: 'array',
+              label: 'Journey Items',
+              fields: [
+                {
+                  name: 'title',
+                  type: 'group',
+                  label: 'Item Title',
+                  fields: [
+                    { name: 'en', type: 'text', label: 'English', required: true },
+                    { name: 'ar', type: 'text', label: 'Arabic', required: true },
+                  ],
+                },
+                {
+                  name: 'content',
+                  type: 'group',
+                  label: 'Item Content',
+                  fields: [
+                    { name: 'en', type: 'text', label: 'English', required: true },
+                    { name: 'ar', type: 'text', label: 'Arabic', required: true },
+                  ],
+                },
+              ],
             },
           ],
         },
@@ -249,9 +307,9 @@ export const Pages: CollectionConfig = {
               ],
             },
             {
-              name: 'description',
+              name: 'subtitle',
               type: 'group',
-              label: 'Description',
+              label: 'Subtitle',
               fields: [
                 { name: 'en', type: 'textarea', label: 'English', required: true },
                 { name: 'ar', type: 'textarea', label: 'Arabic', required: true },
@@ -280,6 +338,55 @@ export const Pages: CollectionConfig = {
               name: 'address',
               type: 'group',
               label: 'Office Address',
+              fields: [
+                { name: 'en', type: 'textarea', label: 'English', required: true },
+                { name: 'ar', type: 'textarea', label: 'Arabic', required: true },
+              ],
+            },
+          ],
+        },
+        {
+          name: 'jobs',
+          type: 'array',
+          label: 'Job Openings',
+          fields: [
+            {
+              name: 'title',
+              type: 'group',
+              label: 'Job Title',
+              fields: [
+                { name: 'en', type: 'text', label: 'English', required: true },
+                { name: 'ar', type: 'text', label: 'Arabic', required: true },
+              ],
+            },
+            {
+              name: 'location',
+              type: 'group',
+              label: 'Job Location',
+              fields: [
+                { name: 'en', type: 'text', label: 'English', required: true },
+                { name: 'ar', type: 'text', label: 'Arabic', required: true },
+              ],
+            },
+            {
+              name: 'offerings',
+              type: 'array',
+              label: 'Job Offerings',
+              fields: [
+                {
+                  name: 'offering',
+                  type: 'group',
+                  fields: [
+                    { name: 'en', type: 'text', label: 'English', required: true },
+                    { name: 'ar', type: 'text', label: 'Arabic', required: true },
+                  ],
+                },
+              ],
+            },
+            {
+              name: 'description',
+              type: 'group',
+              label: 'Job Description',
               fields: [
                 { name: 'en', type: 'textarea', label: 'English', required: true },
                 { name: 'ar', type: 'textarea', label: 'Arabic', required: true },

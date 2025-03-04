@@ -148,7 +148,7 @@ export interface Page {
       };
       statistics?:
         | {
-            number: number;
+            number: string;
             description: {
               en: string;
               ar: string;
@@ -190,11 +190,38 @@ export interface Page {
         en: string;
         ar: string;
       };
+      subtitle: {
+        en: string;
+        ar: string;
+      };
       description: {
         en: string;
         ar: string;
       };
       image: string | Media;
+    };
+    journey: {
+      title: {
+        en: string;
+        ar: string;
+      };
+      subtitle: {
+        en: string;
+        ar: string;
+      };
+      items?:
+        | {
+            title: {
+              en: string;
+              ar: string;
+            };
+            content: {
+              en: string;
+              ar: string;
+            };
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   contactFields?: {
@@ -203,7 +230,7 @@ export interface Page {
         en: string;
         ar: string;
       };
-      description: {
+      subtitle: {
         en: string;
         ar: string;
       };
@@ -216,6 +243,32 @@ export interface Page {
         ar: string;
       };
     };
+    jobs?:
+      | {
+          title: {
+            en: string;
+            ar: string;
+          };
+          location: {
+            en: string;
+            ar: string;
+          };
+          offerings?:
+            | {
+                offering: {
+                  en: string;
+                  ar: string;
+                };
+                id?: string | null;
+              }[]
+            | null;
+          description: {
+            en: string;
+            ar: string;
+          };
+          id?: string | null;
+        }[]
+      | null;
   };
   updatedAt: string;
   createdAt: string;
@@ -246,6 +299,10 @@ export interface Media {
 export interface Service {
   id: string;
   serviceTitle?: string | null;
+  /**
+   * This will be auto-generated from the service name
+   */
+  slug: string;
   name: {
     en: string;
     ar: string;
@@ -268,7 +325,10 @@ export interface Service {
  */
 export interface Project {
   id: string;
-  service: string;
+  /**
+   * Select the service category this project belongs to
+   */
+  service: string | Service;
   name: string;
   description: {
     en: string;
@@ -505,6 +565,12 @@ export interface PagesSelect<T extends boolean = true> {
                     en?: T;
                     ar?: T;
                   };
+              subtitle?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
               description?:
                 | T
                 | {
@@ -512,6 +578,39 @@ export interface PagesSelect<T extends boolean = true> {
                     ar?: T;
                   };
               image?: T;
+            };
+        journey?:
+          | T
+          | {
+              title?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              subtitle?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              items?:
+                | T
+                | {
+                    title?:
+                      | T
+                      | {
+                          en?: T;
+                          ar?: T;
+                        };
+                    content?:
+                      | T
+                      | {
+                          en?: T;
+                          ar?: T;
+                        };
+                    id?: T;
+                  };
             };
       };
   contactFields?:
@@ -526,7 +625,7 @@ export interface PagesSelect<T extends boolean = true> {
                     en?: T;
                     ar?: T;
                   };
-              description?:
+              subtitle?:
                 | T
                 | {
                     en?: T;
@@ -545,6 +644,40 @@ export interface PagesSelect<T extends boolean = true> {
                     ar?: T;
                   };
             };
+        jobs?:
+          | T
+          | {
+              title?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              location?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              offerings?:
+                | T
+                | {
+                    offering?:
+                      | T
+                      | {
+                          en?: T;
+                          ar?: T;
+                        };
+                    id?: T;
+                  };
+              description?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              id?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
@@ -555,6 +688,7 @@ export interface PagesSelect<T extends boolean = true> {
  */
 export interface ServicesSelect<T extends boolean = true> {
   serviceTitle?: T;
+  slug?: T;
   name?:
     | T
     | {

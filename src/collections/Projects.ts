@@ -14,11 +14,14 @@ export const Projects: CollectionConfig = {
   fields: [
     {
       name: 'service',
-      type: 'text',
+      type: 'relationship',
+      relationTo: 'services',
       label: 'Service',
       required: true,
+      admin: {
+        description: 'Select the service category this project belongs to',
+      },
     },
-
     {
       name: 'name',
       type: 'text',
