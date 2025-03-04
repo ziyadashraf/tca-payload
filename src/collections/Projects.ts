@@ -1,5 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
+// commit
+
 export const Projects: CollectionConfig = {
   slug: 'projects',
   admin: {
