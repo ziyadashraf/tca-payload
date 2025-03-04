@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-// commit
+// commit 2
 
 export const Projects: CollectionConfig = {
   slug: 'projects',
