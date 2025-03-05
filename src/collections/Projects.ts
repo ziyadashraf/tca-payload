@@ -5,7 +5,8 @@ import type { CollectionConfig } from 'payload'
 export const Projects: CollectionConfig = {
   slug: 'projects',
   admin: {
-    useAsTitle: 'name',
+    useAsTitle: 'title',
+    defaultColumns: ['title', 'service'],
   },
   access: {
     read: () => true,
@@ -14,6 +15,13 @@ export const Projects: CollectionConfig = {
     delete: () => true,
   },
   fields: [
+    {
+      name: 'title',
+      type: 'text',
+      admin: {
+        hidden: true,
+      },
+    },
     {
       name: 'service',
       type: 'relationship',
@@ -26,29 +34,36 @@ export const Projects: CollectionConfig = {
     },
     {
       name: 'name',
-      type: 'text',
-      label: 'Project Name',
-      required: true,
-    },
-    {
-      name: 'description',
       type: 'group',
-      label: 'Description',
+      label: 'Project Name',
       fields: [
-        { name: 'en', type: 'textarea', label: 'English', required: true },
-        { name: 'ar', type: 'textarea', label: 'Arabic', required: true },
+        { name: 'en', type: 'text', label: 'English', required: true },
+        { name: 'ar', type: 'text', label: 'Arabic', required: true },
       ],
     },
     {
-      name: 'images',
+      name: 'slug',
+      type: 'text',
+      required: true,
+      unique: true,
+      admin: {
+        description: 'This will be auto-generated from the project name',
+      },
+    },
+    {
+      name: 'assets',
       type: 'array',
-      label: 'Project Images',
+      label: 'Project Assets',
       fields: [
         {
-          name: 'image',
+          name: 'media',
           type: 'upload',
+          label: 'Media File',
           relationTo: 'media',
           required: true,
+          admin: {
+            description: 'Upload an image or video file',
+          },
         },
       ],
     },
@@ -56,8 +71,15 @@ export const Projects: CollectionConfig = {
   hooks: {
     beforeChange: [
       ({ data }) => {
-        if (data?.service) {
-          data.service = data.service.toLowerCase()
+        if (data?.name?.en) {
+          // Set the title for admin UI
+          data.title = data.name.en
+
+          // Generate slug from English name
+          data.slug = data.name.en
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric chars with hyphens
+            .replace(/(^-|-$)/g, '') // Remove leading/trailing hyphens
         }
         return data
       },

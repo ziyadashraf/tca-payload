@@ -325,18 +325,25 @@ export interface Service {
  */
 export interface Project {
   id: string;
+  title?: string | null;
   /**
    * Select the service category this project belongs to
    */
   service: string | Service;
-  name: string;
-  description: {
+  name: {
     en: string;
     ar: string;
   };
-  images?:
+  /**
+   * This will be auto-generated from the project name
+   */
+  slug: string;
+  assets?:
     | {
-        image: string | Media;
+        /**
+         * Upload an image or video file
+         */
+        media: string | Media;
         id?: string | null;
       }[]
     | null;
@@ -716,18 +723,19 @@ export interface ServicesSelect<T extends boolean = true> {
  * via the `definition` "projects_select".
  */
 export interface ProjectsSelect<T extends boolean = true> {
+  title?: T;
   service?: T;
-  name?: T;
-  description?:
+  name?:
     | T
     | {
         en?: T;
         ar?: T;
       };
-  images?:
+  slug?: T;
+  assets?:
     | T
     | {
-        image?: T;
+        media?: T;
         id?: T;
       };
   updatedAt?: T;

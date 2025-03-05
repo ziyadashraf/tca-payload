@@ -273,8 +273,8 @@ export const Pages: CollectionConfig = {
                   type: 'group',
                   label: 'Item Content',
                   fields: [
-                    { name: 'en', type: 'text', label: 'English', required: true },
-                    { name: 'ar', type: 'text', label: 'Arabic', required: true },
+                    { name: 'en', type: 'textarea', label: 'English', required: true },
+                    { name: 'ar', type: 'textarea', label: 'Arabic', required: true },
                   ],
                 },
               ],

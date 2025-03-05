@@ -27,17 +27,21 @@ export default buildConfig({
   },
   collections: [Pages, Services, Projects, News, Media, Users],
   cors: {
+    // front end urls
     origins: [
-      // 'http://localhost:3000',
-      'https://tca.com.sa',
-    ], // Change to your frontend URL
-  }, // Allow frontend domain (adjust as needed)
+      process.env.CLIENT_URL_DEV || 'http://localhost:3000',
+      process.env.CLIENT_URL_PROD || 'https://tca.com.sa',
+    ],
+  },
   csrf: [
-    // 'http://localhost:3000',
-    'https://tca.com.sa',
-  ], // Adjust for frontend URL
-  // serverURL: 'http://localhost:3001',
-  serverURL: 'https://admin.tca.com.sa',
+    // front end urls
+    process.env.CLIENT_URL_DEV || 'http://localhost:3000',
+    process.env.CLIENT_URL_PROD || 'https://tca.com.sa',
+  ],
+  serverURL:
+    process.env.ENVIRONMENT === 'development'
+      ? process.env.SERVER_URL_DEV || 'http://localhost:3001'
+      : process.env.SERVER_URL_PROD || 'https://admin.tca.com.sa',
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
