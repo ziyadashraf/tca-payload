@@ -13,9 +13,9 @@ import { s3Storage } from '@payloadcms/storage-s3'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
+import { Services } from './collections/Services'
 import { News } from './collections/News'
 import { Projects } from './collections/Projects'
-import { Services } from './collections/Services'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -27,23 +27,25 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Pages, Services, Projects, News, Media, Users],
-  cors: {
-    // front end urls
-    origins: [
-      process.env.CLIENT_URL_DEV || 'http://localhost:3000',
-      process.env.CLIENT_URL_PROD || 'https://tca.com.sa',
-    ],
-  },
+  collections: [Pages, Users, Media, Services, News, Projects],
+  cors: [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'https://tca-kappa.vercel.app',
+    'https://admin.tca.com.sa',
+    'https://tca.com.sa',
+  ],
   csrf: [
-    // front end urls
-    process.env.CLIENT_URL_DEV || 'http://localhost:3000',
-    process.env.CLIENT_URL_PROD || 'https://tca.com.sa',
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'https://tca-kappa.vercel.app',
+    'https://admin.tca.com.sa',
+    'https://tca.com.sa',
   ],
   serverURL:
     process.env.ENVIRONMENT === 'development'
-      ? process.env.SERVER_URL_DEV || 'http://localhost:3001'
-      : process.env.SERVER_URL_PROD || 'https://admin.tca.com.sa',
+      ? 'http://localhost:3001'
+      : 'https://admin.tca.com.sa',
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
