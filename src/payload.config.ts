@@ -3,7 +3,7 @@ import path from 'path'
 import sharp from 'sharp'
 
 import { mongooseAdapter } from '@payloadcms/db-mongodb' // database-adapter-import
-import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
+// import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -69,6 +69,5 @@ export default buildConfig({
         region: process.env.AWS_REGION || '',
       },
     }),
-    // storage-adapter-placeholder
   ],
 })
