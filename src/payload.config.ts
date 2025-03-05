@@ -33,14 +33,18 @@ export default buildConfig({
     'http://localhost:3001',
     'https://tca-kappa.vercel.app',
     'https://admin.tca.com.sa',
+    'https://www.admin.tca.com.sa',
     'https://tca.com.sa',
+    'https://www.tca.com.sa',
   ],
   csrf: [
     'http://localhost:3000',
     'http://localhost:3001',
     'https://tca-kappa.vercel.app',
     'https://admin.tca.com.sa',
+    'https://www.admin.tca.com.sa',
     'https://tca.com.sa',
+    'https://www.tca.com.sa',
   ],
   serverURL:
     process.env.ENVIRONMENT === 'development'
