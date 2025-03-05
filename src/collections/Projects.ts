@@ -44,7 +44,6 @@ export const Projects: CollectionConfig = {
     {
       name: 'slug',
       type: 'text',
-      required: true,
       unique: true,
       admin: {
         description: 'This will be auto-generated from the project name',
