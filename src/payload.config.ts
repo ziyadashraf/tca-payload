@@ -8,6 +8,8 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 
+import { s3Storage } from '@payloadcms/storage-s3'
+
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
@@ -54,7 +56,19 @@ export default buildConfig({
   // database-adapter-config-end
   sharp,
   plugins: [
-    payloadCloudPlugin(),
+    s3Storage({
+      collections: {
+        media: true,
+      },
+      bucket: process.env.AWS_BUCKET || '',
+      config: {
+        credentials: {
+          accessKeyId: process.env.AWS_ACCESS_KEY || '',
+          secretAccessKey: process.env.AWS_SECRET || '',
+        },
+        region: process.env.AWS_REGION || '',
+      },
+    }),
     // storage-adapter-placeholder
   ],
 })
