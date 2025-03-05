@@ -3,7 +3,7 @@ import path from 'path'
 import sharp from 'sharp'
 
 import { mongooseAdapter } from '@payloadcms/db-mongodb' // database-adapter-import
-// import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
+import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -56,17 +56,18 @@ export default buildConfig({
   // database-adapter-config-end
   sharp,
   plugins: [
+    payloadCloudPlugin(),
     s3Storage({
       collections: {
         media: true,
       },
-      bucket: process.env.AWS_BUCKET || '',
+      bucket: process.env.AWS_BUCKET!,
       config: {
         credentials: {
-          accessKeyId: process.env.AWS_ACCESS_KEY || '',
-          secretAccessKey: process.env.AWS_SECRET || '',
+          accessKeyId: process.env.AWS_ACCESS_KEY!,
+          secretAccessKey: process.env.AWS_SECRET!,
         },
-        region: process.env.AWS_REGION || '',
+        region: process.env.AWS_REGION!,
       },
     }),
   ],
