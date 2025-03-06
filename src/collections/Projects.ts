@@ -1,7 +1,5 @@
 import type { CollectionConfig } from 'payload'
 
-// commit 2
-
 export const Projects: CollectionConfig = {
   slug: 'projects',
   admin: {
@@ -52,20 +50,13 @@ export const Projects: CollectionConfig = {
     },
     {
       name: 'assets',
-      type: 'array',
-      label: 'Project Assets',
-      fields: [
-        {
-          name: 'media',
-          type: 'upload',
-          label: 'Media File',
-          relationTo: 'media',
-          required: true,
-          admin: {
-            description: 'Upload an image or video file',
-          },
-        },
-      ],
+      type: 'upload',
+      relationTo: 'media',
+      hasMany: true,
+      required: true,
+      admin: {
+        description: 'Drag and drop multiple files here or click to select files',
+      },
     },
   ],
   hooks: {

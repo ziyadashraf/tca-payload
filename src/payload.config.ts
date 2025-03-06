@@ -27,7 +27,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Pages, Users, Media, Services, News, Projects],
+  collections: [Pages, Services, News, Projects, Users, Media],
   cors: [
     'http://localhost:3000',
     'http://localhost:3001',
