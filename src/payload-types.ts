@@ -70,6 +70,7 @@ export interface Config {
     services: Service;
     news: News;
     projects: Project;
+    forms: Form;
     users: User;
     media: Media;
     'payload-locked-documents': PayloadLockedDocument;
@@ -82,6 +83,7 @@ export interface Config {
     services: ServicesSelect<false> | ServicesSelect<true>;
     news: NewsSelect<false> | NewsSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    forms: FormsSelect<false> | FormsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -377,6 +379,31 @@ export interface Project {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "forms".
+ */
+export interface Form {
+  id: string;
+  title: string;
+  template: 'contact';
+  contactForm?: {
+    title: {
+      en: string;
+      ar: string;
+    };
+    subtitle: {
+      en: string;
+      ar: string;
+    };
+    description: {
+      en: string;
+      ar: string;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -415,6 +442,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'projects';
         value: string | Project;
+      } | null)
+    | ({
+        relationTo: 'forms';
+        value: string | Form;
       } | null)
     | ({
         relationTo: 'users';
@@ -767,6 +798,38 @@ export interface ProjectsSelect<T extends boolean = true> {
       };
   slug?: T;
   assets?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "forms_select".
+ */
+export interface FormsSelect<T extends boolean = true> {
+  title?: T;
+  template?: T;
+  contactForm?:
+    | T
+    | {
+        title?:
+          | T
+          | {
+              en?: T;
+              ar?: T;
+            };
+        subtitle?:
+          | T
+          | {
+              en?: T;
+              ar?: T;
+            };
+        description?:
+          | T
+          | {
+              en?: T;
+              ar?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
 }

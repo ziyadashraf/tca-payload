@@ -16,6 +16,7 @@ import { Pages } from './collections/Pages'
 import { Services } from './collections/Services'
 import { News } from './collections/News'
 import { Projects } from './collections/Projects'
+import { Forms } from './collections/Forms'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -27,7 +28,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Pages, Services, News, Projects, Users, Media],
+  collections: [Pages, Services, News, Projects, Forms, Users, Media],
   cors: [
     'http://localhost:3000',
     'http://localhost:3001',
