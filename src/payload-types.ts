@@ -71,6 +71,7 @@ export interface Config {
     news: News;
     projects: Project;
     forms: Form;
+    components: Component;
     users: User;
     media: Media;
     'payload-locked-documents': PayloadLockedDocument;
@@ -84,6 +85,7 @@ export interface Config {
     news: NewsSelect<false> | NewsSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
+    components: ComponentsSelect<false> | ComponentsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -404,6 +406,19 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "components".
+ */
+export interface Component {
+  id: string;
+  template: 'navbar';
+  navbar?: {
+    logo: string | Media;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -446,6 +461,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'forms';
         value: string | Form;
+      } | null)
+    | ({
+        relationTo: 'components';
+        value: string | Component;
       } | null)
     | ({
         relationTo: 'users';
@@ -829,6 +848,20 @@ export interface FormsSelect<T extends boolean = true> {
               en?: T;
               ar?: T;
             };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "components_select".
+ */
+export interface ComponentsSelect<T extends boolean = true> {
+  template?: T;
+  navbar?:
+    | T
+    | {
+        logo?: T;
       };
   updatedAt?: T;
   createdAt?: T;
