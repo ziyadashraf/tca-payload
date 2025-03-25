@@ -143,6 +143,20 @@ export interface Page {
         en?: string | null;
         ar?: string | null;
       };
+      description?: {
+        en?: string | null;
+        ar?: string | null;
+      };
+      info?: {
+        title?: {
+          en?: string | null;
+          ar?: string | null;
+        };
+        description?: {
+          en?: string | null;
+          ar?: string | null;
+        };
+      };
       heroImage: string | Media;
     };
     stats: {
@@ -185,6 +199,10 @@ export interface Page {
         ar: string;
       };
       subtitle: {
+        en: string;
+        ar: string;
+      };
+      description: {
         en: string;
         ar: string;
       };
@@ -542,6 +560,28 @@ export interface PagesSelect<T extends boolean = true> {
                     en?: T;
                     ar?: T;
                   };
+              description?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              info?:
+                | T
+                | {
+                    title?:
+                      | T
+                      | {
+                          en?: T;
+                          ar?: T;
+                        };
+                    description?:
+                      | T
+                      | {
+                          en?: T;
+                          ar?: T;
+                        };
+                  };
               heroImage?: T;
             };
         stats?:
@@ -602,6 +642,12 @@ export interface PagesSelect<T extends boolean = true> {
                     ar?: T;
                   };
               subtitle?:
+                | T
+                | {
+                    en?: T;
+                    ar?: T;
+                  };
+              description?:
                 | T
                 | {
                     en?: T;

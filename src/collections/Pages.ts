@@ -68,6 +68,40 @@ export const Pages: CollectionConfig = {
               ],
             },
             {
+              name: 'description',
+              type: 'group',
+              label: 'Description',
+              fields: [
+                { name: 'en', type: 'textarea', label: 'English' },
+                { name: 'ar', type: 'textarea', label: 'Arabic' },
+              ],
+            },
+            {
+              name: 'info',
+              type: 'group',
+              label: 'Info',
+              fields: [
+                {
+                  name: 'title',
+                  type: 'group',
+                  label: 'Title',
+                  fields: [
+                    { name: 'en', type: 'text', label: 'English' },
+                    { name: 'ar', type: 'text', label: 'Arabic' },
+                  ],
+                },
+                {
+                  name: 'description',
+                  type: 'group',
+                  label: 'Description',
+                  fields: [
+                    { name: 'en', type: 'textarea', label: 'English' },
+                    { name: 'ar', type: 'textarea', label: 'Arabic' },
+                  ],
+                },
+              ],
+            },
+            {
               name: 'heroImage',
               type: 'upload',
               label: 'Image',
@@ -185,6 +219,15 @@ export const Pages: CollectionConfig = {
               fields: [
                 { name: 'en', type: 'text', label: 'English', required: true },
                 { name: 'ar', type: 'text', label: 'Arabic', required: true },
+              ],
+            },
+            {
+              name: 'description',
+              type: 'group',
+              label: 'Description',
+              fields: [
+                { name: 'en', type: 'textarea', label: 'English', required: true },
+                { name: 'ar', type: 'textarea', label: 'Arabic', required: true },
               ],
             },
           ],
