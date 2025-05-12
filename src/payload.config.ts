@@ -22,18 +22,6 @@ import { Components } from './collections/Components'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-/*
-[
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'https://tca-kappa.vercel.app',
-    'https://admin.tca.com.sa',
-    'https://www.admin.tca.com.sa',
-    'https://tca.com.sa',
-    'https://www.tca.com.sa',
-  ]
-*/
-
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -42,9 +30,16 @@ export default buildConfig({
     },
   },
   collections: [Pages, Services, News, Projects, Forms, Components, Users, Media],
-  cors: {
-    origins: '*',
-  },
+  cors: [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'https://tca-kappa.vercel.app',
+    'https://admin.tca.com.sa',
+    'https://www.admin.tca.com.sa',
+    'https://tca.com.sa',
+    'https://www.tca.com.sa',
+    '*',
+  ],
   csrf: [
     'http://localhost:3000',
     'http://localhost:3001',
@@ -53,6 +48,7 @@ export default buildConfig({
     'https://www.admin.tca.com.sa',
     'https://tca.com.sa',
     'https://www.tca.com.sa',
+    '*',
   ],
   serverURL:
     process.env.ENVIRONMENT === 'development'
