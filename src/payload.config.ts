@@ -23,6 +23,11 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  // serverURL:
+  //   process.env.ENVIRONMENT === 'development'
+  //     ? 'http://localhost:3001'
+  //     : 'https://admin.tca.com.sa',
+  serverURL: 'https://admin.tca.com.sa',
   admin: {
     user: Users.slug,
     importMap: {
@@ -30,15 +35,37 @@ export default buildConfig({
     },
   },
   collections: [Pages, Services, News, Projects, Forms, Components, Users, Media],
-  cors: [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'https://tca-kappa.vercel.app',
-    'https://admin.tca.com.sa',
-    'https://www.admin.tca.com.sa',
-    'https://tca.com.sa',
-    'https://www.tca.com.sa',
-  ],
+  cors: {
+    origins: [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'https://tca-kappa.vercel.app',
+      'https://admin.tca.com.sa',
+      'https://www.admin.tca.com.sa',
+      'https://tca.com.sa',
+      'https://www.tca.com.sa',
+    ],
+    headers: [
+      'Content-Type',
+      'Authorization',
+      'Accept',
+      'Origin',
+      'X-Requested-With',
+      'Content-Length',
+      'Accept-Encoding',
+      'Accept-Language',
+      'Cache-Control',
+      'Connection',
+      'Cookie',
+      'Host',
+      'Pragma',
+      'Referer',
+      'User-Agent',
+      'X-Forwarded-For',
+      'X-Forwarded-Proto',
+      'X-Real-IP',
+    ],
+  },
   csrf: [
     'http://localhost:3000',
     'http://localhost:3001',
@@ -48,10 +75,6 @@ export default buildConfig({
     'https://tca.com.sa',
     'https://www.tca.com.sa',
   ],
-  serverURL:
-    process.env.ENVIRONMENT === 'development'
-      ? 'http://localhost:3001'
-      : 'https://admin.tca.com.sa',
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
