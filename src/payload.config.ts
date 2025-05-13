@@ -35,16 +35,9 @@ export default buildConfig({
     },
   },
   collections: [Pages, Services, News, Projects, Forms, Components, Users, Media],
+  csrf: ['http://localhost:3000', 'https://tca.com.sa', 'https://www.tca.com.sa'],
   cors: {
-    origins: [
-      'http://localhost:3000',
-      'http://localhost:3001',
-      'https://tca-kappa.vercel.app',
-      'https://admin.tca.com.sa',
-      'https://www.admin.tca.com.sa',
-      'https://tca.com.sa',
-      'https://www.tca.com.sa',
-    ],
+    origins: ['http://localhost:3000', 'https://tca.com.sa', 'https://www.tca.com.sa'],
     headers: [
       'Content-Type',
       'Authorization',
@@ -66,15 +59,6 @@ export default buildConfig({
       'X-Real-IP',
     ],
   },
-  csrf: [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'https://tca-kappa.vercel.app',
-    'https://admin.tca.com.sa',
-    'https://www.admin.tca.com.sa',
-    'https://tca.com.sa',
-    'https://www.tca.com.sa',
-  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
